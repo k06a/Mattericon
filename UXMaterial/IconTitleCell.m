@@ -29,25 +29,23 @@
 
 - (NSString *)fileName
 {
-    if (_fileName == nil)
-        _fileName = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_black_48px.svg", self.item[@"id"]]];
-    return _fileName;
+    return [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@.%@", self.item[@"id"], [self.delegate color], [self.delegate size], [self.delegate format]]];
 }
 
 - (NSData *)svg
 {
     if (_svg == nil) {
-        _svg = [NSData dataWithContentsOfFile:self.fileName];
-        if (_svg)
-            return _svg;
+        NSData *dt = [NSData dataWithContentsOfFile:self.fileName];
+        if (dt)
+            return dt;
         
         _svg = (id)[NSNull null];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSString *path = [NSString stringWithFormat:@"https://storage.googleapis.com/material-icons/external-assets/v1/icons/svg/%@_black_48px.svg", self.item[@"id"]];
+            NSString *path = [NSString stringWithFormat:@"https://storage.googleapis.com/material-icons/external-assets/v1/icons/%@/%@_%@_%@.%@", [self.delegate format], self.item[@"id"], [self.delegate color], [self.delegate size], [self.delegate format]];
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
             [data writeToFile:self.fileName atomically:YES];
             dispatch_async(dispatch_get_main_queue(), ^{
-                _svg = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
+                _svg = nil;
             });
         });
     }

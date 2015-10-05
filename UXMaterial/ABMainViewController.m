@@ -15,7 +15,7 @@
 #import "TitleHeader.h"
 #import "ABMainViewController.h"
 
-@interface ABMainViewController () <UXCollectionViewDataSource, UXCollectionViewDelegate, NSSearchFieldDelegate>
+@interface ABMainViewController () <UXCollectionViewDataSource, UXCollectionViewDelegate, NSSearchFieldDelegate, FormatDelegate>
 
 @property (nonatomic, strong) NSSearchField *searchField;
 @property (nonatomic, strong) UXCollectionView *collectionView;
@@ -27,10 +27,31 @@
 @property (nonatomic, strong) NSArray<NSArray<NSDictionary*>*> *groupedItems;
 @property (nonatomic, strong) NSDictionary<NSString*,NSArray<NSValue*>*> *itemsHighlights;
 
+@property (nonatomic, strong) NSPopUpButton *colorButton;
+@property (nonatomic, strong) NSPopUpButton *sizeButton;
+@property (nonatomic, strong) NSPopUpButton *formatButton;
 
 @end
 
 @implementation ABMainViewController
+
+- (NSString *)color
+{
+    return @[@"black",@"white"][self.colorButton.indexOfSelectedItem];
+}
+
+- (NSString *)size
+{
+    NSString *str = self.sizeButton.titleOfSelectedItem;
+    if (self.formatButton.indexOfSelectedItem == 0)
+        str = [str stringByReplacingOccurrencesOfString:@"dp" withString:@"px"];
+    return str;
+}
+
+- (NSString *)format
+{
+    return @[@"svg",@"zip"][self.formatButton.indexOfSelectedItem];
+}
 
 - (NSArray<NSArray<NSDictionary *> *> *)groupedItems
 {
@@ -141,6 +162,17 @@
     });
 }
 
+- (void)popUpValueChanged:(NSPopUpButton *)sender
+{
+    if (sender == self.colorButton)
+        [[NSUserDefaults standardUserDefaults] setInteger:sender.indexOfSelectedItem forKey:@"colorIndex"];
+    if (sender == self.formatButton)
+        [[NSUserDefaults standardUserDefaults] setInteger:sender.indexOfSelectedItem forKey:@"formatIndex"];
+    if (sender == self.sizeButton)
+        [[NSUserDefaults standardUserDefaults] setInteger:sender.indexOfSelectedItem forKey:@"sizeIndex"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - View
 
 - (void)viewDidLoad
@@ -162,23 +194,39 @@
     self.navigationItem.rightBarButtonItems = @[searchItem];
     
     // Toolbar
-    NSButton *radioButton = [[NSButton alloc] init];
-    [radioButton setButtonType:NSSwitchButton];
-    radioButton.title = @"Test";
-    [radioButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.lessThanOrEqualTo(@100);
-    }];
-    UXBarButtonItem *radioButtonItem = [[UXBarButtonItem alloc] initWithCustomView:radioButton];
-    NSButton *radioButton2 = [[NSButton alloc] init];
-    [radioButton2 setButtonType:NSSwitchButton];
-    radioButton2.title = @"Test2";
-    [radioButton2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.lessThanOrEqualTo(@100);
-    }];
-    UXBarButtonItem *radioButtonItem2 = [[UXBarButtonItem alloc] initWithCustomView:radioButton2];
+    UXBarButtonItem *colorButtonItem = [[UXBarButtonItem alloc] initWithCustomView:^{
+        self.colorButton = [[NSPopUpButton alloc] init];
+        [self.colorButton setTarget:self action:@selector(popUpValueChanged:)];
+        [self.colorButton addItemsWithTitles:@[@"Black",@"White"]];
+        [self.colorButton selectItemAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"colorIndex"]];
+        [self.colorButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@100);
+        }];
+        return self.colorButton;
+    }()];
+    UXBarButtonItem *formatButtonItem = [[UXBarButtonItem alloc] initWithCustomView:^{
+        self.formatButton = [[NSPopUpButton alloc] init];
+        [self.formatButton setTarget:self action:@selector(popUpValueChanged:)];
+        [self.formatButton addItemsWithTitles:@[@"SVG",@"PNGs"]];
+        [self.formatButton selectItemAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"formatIndex"]];
+        [self.formatButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@75);
+        }];
+        return self.formatButton;
+    }()];
+    UXBarButtonItem *sizeButtonItem = [[UXBarButtonItem alloc] initWithCustomView:^{
+        self.sizeButton = [[NSPopUpButton alloc] init];
+        [self.sizeButton setTarget:self action:@selector(popUpValueChanged:)];
+        [self.sizeButton addItemsWithTitles:@[@"48dp",@"36dp",@"24dp",@"18dp"]];
+        [self.sizeButton selectItemAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"sizeIndex"]];
+        [self.sizeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@75);
+        }];
+        return self.sizeButton;
+    }()];
     UXBarButtonItem *flexibleSpace = [[UXBarButtonItem alloc] initWithBarButtonSystemItem:13 target:nil action:nil];
-    UXBarButtonItem *toolbarButton = [[UXBarButtonItem alloc] initWithTitle:@"Test there!" style:1 target:self action:nil];
-    [self setToolbarItems:@[radioButtonItem, radioButtonItem2, flexibleSpace, toolbarButton]];
+    //UXBarButtonItem *toolbarButton = [[UXBarButtonItem alloc] initWithTitle:@"Test there!" style:1 target:self action:nil];
+    [self setToolbarItems:@[colorButtonItem, formatButtonItem, sizeButtonItem, flexibleSpace]];
     self.navigationController.toolbarHidden = NO;
     
     // Collection View
@@ -239,6 +287,7 @@
 {
     IconTitleCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
+    cell.delegate = self;
     cell.item = self.groupedItems[indexPath.section][indexPath.item];
     cell.textIcon.font = self.font;
     cell.textIcon.text = cell.item[@"ligature"];
