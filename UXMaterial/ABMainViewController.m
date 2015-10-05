@@ -299,7 +299,7 @@
         if (attrs.frame.origin.y <= collectionView.contentOffset.y)
         {
             self.floatingTabs.selectedIndex = section;
-            self.floatingTabs.progress = (collectionView.contentOffset.y - collectionView.frame.origin.y - attrs.frame.origin.y)/(prevY - attrs.frame.origin.y);
+            self.floatingTabs.progress = (collectionView.contentOffset.y - attrs.frame.origin.y)/(prevY - attrs.frame.origin.y);
             break;
         }
         prevY = attrs.frame.origin.y;
@@ -326,6 +326,7 @@
     if ([kind isEqualToString:@"UXCollectionViewElementKindSectionHeader"])
     {
         TitleHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
+        //headerView.isFloatingPinned = YES;
         NSString *title = self.groups[indexPath.section][@"data"][@"name"];
         headerView.titleLabel.text = title;
         return headerView;
