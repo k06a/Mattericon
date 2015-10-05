@@ -58,6 +58,8 @@
         // Create
         self.textIcon = [[UXLabel alloc] init];
         self.textLabel = [[UXLabel alloc] init];
+        self.textIcon.lineBreakMode = NSLineBreakByClipping;
+        self.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [self.contentView addSubview:self.textIcon];
         [self.contentView addSubview:self.textLabel];
         
@@ -78,7 +80,6 @@
             label.centerVertically = YES;
             label.textAlignment = NSTextAlignmentCenter;
             label.textColor = [NSColor colorWithWhite:0x75/255. alpha:1.0];
-            label.lineBreakMode = NSLineBreakByWordWrapping;
         }
     }
     return self;

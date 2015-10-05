@@ -13,12 +13,14 @@
 
 #import "IconTitleCell.h"
 #import "TitleHeader.h"
+#import "ABFloatingTabs.h"
 #import "ABMainViewController.h"
 
 @interface ABMainViewController () <UXCollectionViewDataSource, UXCollectionViewDelegate, NSSearchFieldDelegate, FormatDelegate>
 
 @property (nonatomic, strong) NSSearchField *searchField;
 @property (nonatomic, strong) UXCollectionView *collectionView;
+@property (nonatomic, strong) ABFloatingTabs *floatingTabs;
 
 @property (nonatomic, strong) NSFont *font;
 
@@ -157,6 +159,7 @@
             self.groups = json[@"groups"];
             self.items = json[@"icons"];
             self.groupedItems = nil;
+            self.floatingTabs.titles = [self.groups valueForKeyPath:@"data.name"];
             [self.collectionView reloadData];
         });
     });
@@ -242,8 +245,39 @@
     
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).with.insets(NSEdgeInsetsMake(self.navigationController.navigationBar.bounds.size.height + self.navigationController.toolbar.bounds.size.height, 0, 0, 0));
+        make.edges.equalTo(self.view).with.insets(NSEdgeInsetsMake(self.navigationController.navigationBar.bounds.size.height + 24.5, 0, self.navigationController.toolbar.bounds.size.height, 0));
     }];
+    
+    // Floating tabs
+    self.floatingTabs = [[ABFloatingTabs alloc] init];
+    self.floatingTabs.backgroundColor = [NSColor colorWithWhite:222/255. alpha:1.0];
+    [self.view addSubview:self.floatingTabs];
+    [self.floatingTabs mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(self.navigationController.navigationBar.bounds.size.height));
+        make.leading.equalTo(@0);
+        make.trailing.equalTo(@0);
+        make.height.equalTo(@24);
+    }];
+    
+    self.view.backgroundColor = [NSColor grayColor];
+}
+
+- (void)viewDidAppear:(BOOL)arg1
+{
+    [super viewDidAppear:arg1];
+    
+    // Move toolbar to bottom
+    for (NSLayoutConstraint *con in self.navigationController.toolbar.superview.constraints) {
+        if (con.firstAttribute == NSLayoutAttributeTop &&
+            con.firstItem == self.navigationController.toolbar)
+        {
+            [self.navigationController.toolbar.superview removeConstraint:con];
+            [self.navigationController.toolbar mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(self.navigationController.toolbar.superview.mas_bottom);
+            }];
+            break;
+        }
+    }
 }
 
 #pragma mark - Search Field
@@ -255,6 +289,23 @@
 }
 
 #pragma mark - Collection View
+
+- (void)collectionViewDidScroll:(UXCollectionView *)collectionView
+{
+    CGFloat prevY = collectionView.contentSize.height;
+    for (NSInteger section = collectionView.numberOfSections-1; section >= 0; section--)
+    {
+        UXCollectionViewLayoutAttributes *attrs = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
+        if (attrs.frame.origin.y <= collectionView.contentOffset.y)
+        {
+            self.floatingTabs.selectedIndex = section;
+            self.floatingTabs.progress = (collectionView.contentOffset.y - collectionView.frame.origin.y - attrs.frame.origin.y)/(prevY - attrs.frame.origin.y);
+            break;
+        }
+        prevY = attrs.frame.origin.y;
+    }
+    
+}
 
 - (NSInteger)numberOfSectionsInCollectionView:(UXCollectionView *)collectionView
 {

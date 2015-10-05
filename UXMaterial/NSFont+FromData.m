@@ -18,8 +18,9 @@
     CGDataProviderRelease(fontDataProvider);
     CFErrorRef error;
     CTFontManagerRegisterGraphicsFont(newFont, &error);
+    NSFont *font = [NSFont fontWithName:newFontName size:size];
     CGFontRelease(newFont);
-    return [NSFont fontWithName:newFontName size:size];
+    return font;
 }
 
 @end
