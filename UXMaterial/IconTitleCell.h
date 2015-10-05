@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) UXLabel *textIcon;
 @property (nonatomic, strong) UXLabel *textLabel;
+@property (nonatomic, strong) id item;
 
 @end

@@ -239,13 +239,13 @@
 {
     IconTitleCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    id item = self.groupedItems[indexPath.section][indexPath.item];
+    cell.item = self.groupedItems[indexPath.section][indexPath.item];
     cell.textIcon.font = self.font;
-    cell.textIcon.text = item[@"ligature"];
+    cell.textIcon.text = cell.item[@"ligature"];
     
-    NSAttributedString *astr = [[NSAttributedString alloc] initWithString:item[@"name"]];
+    NSAttributedString *astr = [[NSAttributedString alloc] initWithString:cell.item[@"name"]];
     astr = [astr bos_makeString:^(BOStringMaker *make) {
-        for (NSValue *value in self.itemsHighlights[item[@"ligature"]]) {
+        for (NSValue *value in self.itemsHighlights[cell.item[@"ligature"]]) {
             make.with.range(value.rangeValue, ^{
                 make.backgroundColor([NSColor yellowColor]);
             });
