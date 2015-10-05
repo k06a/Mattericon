@@ -1,0 +1,14 @@
+//
+//  Sample-Shared.h
+//  UXMaterial
+//
+//  Created by Anton Bukov on 05.10.2015.
+//  Copyright (c) 2015 @k06a. All rights reserved.
+//
+
+#ifndef UXMaterial_Sample_Shared_h
+#define UXMaterial_Sample_Shared_h
+
+#import <UXKit/UXKit.h>
+
+#endif

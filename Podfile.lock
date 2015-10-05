@@ -1,0 +1,16 @@
+PODS:
+  - BOString (0.0.9)
+  - JRSwizzle (1.0)
+  - Masonry (0.6.3)
+
+DEPENDENCIES:
+  - BOString
+  - JRSwizzle
+  - Masonry
+
+SPEC CHECKSUMS:
+  BOString: c896f83b514996bbe874c0a3afd61f4c6764e0ed
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
+
+COCOAPODS: 0.38.2
