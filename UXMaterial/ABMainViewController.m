@@ -51,22 +51,23 @@
                 NSMutableArray *foundRanges = [NSMutableArray array];
                 NSArray<NSString *> *tokens = [[item[@"name"] componentsSeparatedByCharactersInSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
                 NSMutableArray<NSNumber *> *tokensHidden = [[tokens valueForKey:@"length"] mutableCopy];
-                for (NSInteger searchTokenIndex = 0; searchTokenIndex < searchTokens.count; searchTokenIndex++)
+                for (NSString *searchToken in searchTokens)
                 {
                     NSInteger tokenPosition = 0;
                     for (NSInteger i = 0; i < tokens.count; i++)
                     {
-                        if ([tokensHidden[i] integerValue] == 0)
-                            continue;
-                        
                         NSString *token = tokens[i];
-                        NSRange range = [token rangeOfString:searchTokens[searchTokenIndex] options:NSCaseInsensitiveSearch];
-                        if (range.location != NSNotFound) {
-                            range.location += tokenPosition;
-                            [foundRanges addObject:[NSValue valueWithRange:range]];
-                            tokensHidden[i] = @0;
-                            break;
+                        if ([tokensHidden[i] integerValue])
+                        {
+                            NSRange range = [token rangeOfString:searchToken options:NSCaseInsensitiveSearch];
+                            if (range.location != NSNotFound) {
+                                range.location += tokenPosition;
+                                [foundRanges addObject:[NSValue valueWithRange:range]];
+                                tokensHidden[i] = @0;
+                                break;
+                            }
                         }
+                        
                         if (i + 1 < tokens.count) {
                             tokenPosition = [item[@"name"] rangeOfString:tokens[i+1] options:NSCaseInsensitiveSearch range:NSMakeRange(tokenPosition + token.length, [item[@"name"] length] - tokenPosition - token.length)].location;
                         }
