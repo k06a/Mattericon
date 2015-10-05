@@ -22,14 +22,14 @@
         
         // Layout
         [self.textIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self).centerOffset(CGPointMake(0,-10));
+            make.center.equalTo(self).centerOffset(CGPointMake(0,-12));
             make.size.mas_equalTo(CGSizeMake(60,60));
         }];
         [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(@(-3));
+            make.bottom.equalTo(@0);
+            make.height.equalTo(@36);
             make.leading.equalTo(@0);
             make.trailing.equalTo(@0);
-            make.height.equalTo(@30);
         }];
         
         // Configure

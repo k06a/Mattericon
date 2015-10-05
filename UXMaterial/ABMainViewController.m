@@ -50,20 +50,26 @@
                 
                 NSMutableArray *foundRanges = [NSMutableArray array];
                 NSArray<NSString *> *tokens = [[item[@"name"] componentsSeparatedByCharactersInSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
-                NSInteger tokenPosition = 0;
-                NSInteger searchTokenIndex = 0;
-                for (NSInteger i = 0; i < tokens.count && searchTokenIndex < searchTokens.count; i++)
+                NSMutableArray<NSNumber *> *tokensHidden = [[tokens valueForKey:@"length"] mutableCopy];
+                for (NSInteger searchTokenIndex = 0; searchTokenIndex < searchTokens.count; searchTokenIndex++)
                 {
-                    NSString *token = tokens[i];
-                    NSRange range = [token rangeOfString:searchTokens[searchTokenIndex]];
-                    if (range.location != NSNotFound) {
-                        searchTokenIndex++;
-                        range.location += tokenPosition;
-                        [foundRanges addObject:[NSValue valueWithRange:range]];
-                        continue;
-                    }
-                    if (i + 1 < tokens.count) {
-                        tokenPosition = [item[@"name"] rangeOfString:tokens[i+1] options:NSCaseInsensitiveSearch range:NSMakeRange(tokenPosition + token.length, [item[@"name"] length] - tokenPosition - token.length)].location;
+                    NSInteger tokenPosition = 0;
+                    for (NSInteger i = 0; i < tokens.count; i++)
+                    {
+                        if ([tokensHidden[i] integerValue] == 0)
+                            continue;
+                        
+                        NSString *token = tokens[i];
+                        NSRange range = [token rangeOfString:searchTokens[searchTokenIndex] options:NSCaseInsensitiveSearch];
+                        if (range.location != NSNotFound) {
+                            range.location += tokenPosition;
+                            [foundRanges addObject:[NSValue valueWithRange:range]];
+                            tokensHidden[i] = @0;
+                            break;
+                        }
+                        if (i + 1 < tokens.count) {
+                            tokenPosition = [item[@"name"] rangeOfString:tokens[i+1] options:NSCaseInsensitiveSearch range:NSMakeRange(tokenPosition + token.length, [item[@"name"] length] - tokenPosition - token.length)].location;
+                        }
                     }
                 }
                 
@@ -243,9 +249,11 @@
                 make.backgroundColor([NSColor yellowColor]);
             });
         }
+        NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        make.paragraphStyle(paragraphStyle);
     }];
     cell.textLabel.attributedText = astr;
-    //cell.textLabel.textColor = nil;
     
     return cell;
 }
