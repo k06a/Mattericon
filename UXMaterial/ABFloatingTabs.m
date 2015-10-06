@@ -17,6 +17,12 @@
 
 @implementation ABFloatingTabs
 
+- (void)labelClicked:(UXClickEventTracker *)tracker
+{
+    NSInteger index = [self.subviews indexOfObject:tracker.view] - 1;
+    [self.delegate clickedTabAtIndex:index];
+}
+
 - (UXImageView *)backImageView
 {
     if (_backImageView == nil) {
@@ -44,6 +50,7 @@
     UXLabel *prevLabel;
     for (NSString *title in titles) {
         UXLabel *label = [[UXLabel alloc] init];
+        [label addEventTracker:[[UXClickEventTracker alloc] initWithTarget:self action:@selector(labelClicked:)]];
         label.textColor = [NSColor blackColor];
         label.text = title;
         //label.centerVertically = YES;

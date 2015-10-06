@@ -16,7 +16,7 @@
 #import "ABFloatingTabs.h"
 #import "ABMainViewController.h"
 
-@interface ABMainViewController () <UXCollectionViewDataSource, UXCollectionViewDelegate, NSSearchFieldDelegate, FormatDelegate>
+@interface ABMainViewController () <UXCollectionViewDataSource, UXCollectionViewDelegate, NSSearchFieldDelegate, FormatDelegate, ABFloatingTabsDelegate>
 
 @property (nonatomic, strong) NSSearchField *searchField;
 @property (nonatomic, strong) UXCollectionView *collectionView;
@@ -250,6 +250,7 @@
     
     // Floating tabs
     self.floatingTabs = [[ABFloatingTabs alloc] init];
+    self.floatingTabs.delegate = self;
     self.floatingTabs.backgroundColor = [NSColor colorWithWhite:222/255. alpha:1.0];
     [self.view addSubview:self.floatingTabs];
     [self.floatingTabs mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -280,6 +281,14 @@
     }
 }
 
+#pragma mark - Floating Tabs
+
+- (void)clickedTabAtIndex:(NSInteger)index
+{
+    UXCollectionViewLayoutAttributes *attrs = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:index]];
+    [self.collectionView setContentOffset:CGPointMake(0, attrs.frame.origin.y-38) animated:YES];
+}
+
 #pragma mark - Search Field
 
 - (void)controlTextDidChange:(NSNotification *)obj
@@ -299,12 +308,11 @@
         if (attrs.frame.origin.y <= collectionView.contentOffset.y)
         {
             self.floatingTabs.selectedIndex = section;
-            self.floatingTabs.progress = (collectionView.contentOffset.y - attrs.frame.origin.y)/(prevY - attrs.frame.origin.y);
+            self.floatingTabs.progress = (collectionView.contentOffset.y - attrs.frame.origin.y + 38)/(prevY - attrs.frame.origin.y);
             break;
         }
         prevY = attrs.frame.origin.y;
     }
-    
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UXCollectionView *)collectionView
