@@ -27,7 +27,7 @@
 {
     if (_backImageView == nil) {
         _backImageView = [[UXImageView alloc] init];
-        _backImageView.backgroundColor = [NSColor colorWithWhite:200/255. alpha:1.0];
+        _backImageView.backgroundColor = [[NSColor blackColor] colorWithAlphaComponent:0.1];
         _backImageView.layer.cornerRadius = 8;
         _backImageView.layer.masksToBounds = YES;
         _backImageView.layer.borderColor = [NSColor grayColor].CGColor;
@@ -50,17 +50,18 @@
     UXLabel *prevLabel;
     for (NSString *title in titles) {
         UXLabel *label = [[UXLabel alloc] init];
+        label.font = [NSFont systemFontOfSize:10];
+        label.textColor = [NSColor colorWithWhite:88/255. alpha:0.75];
         [label addEventTracker:[[UXClickEventTracker alloc] initWithTarget:self action:@selector(labelClicked:)]];
         label.textColor = [NSColor blackColor];
         label.text = title;
-        //label.centerVertically = YES;
         [self addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             if (prevLabel == nil)
                 make.leading.equalTo(@8);
             else
                 make.left.equalTo(prevLabel.mas_right).with.offset(8);
-            make.centerY.equalTo(self.mas_centerY).with.offset(-1);
+            make.centerY.equalTo(self.mas_centerY).with.offset(0);
         }];
         prevLabel = label;
     }

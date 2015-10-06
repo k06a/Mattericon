@@ -64,9 +64,12 @@
         [self.contentView addSubview:self.textLabel];
         
         // Layout
-        [self.textIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+        /*[self.textIcon mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self).centerOffset(CGPointMake(0,-12));
             make.size.mas_equalTo(CGSizeMake(60,60));
+        }];*/
+        [self.textIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self).insets(NSEdgeInsetsMake(0,0,24,0));
         }];
         [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(@0);
@@ -88,7 +91,16 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     [self svg];
-    //self.backgroundColor = [NSColor colorWithWhite:240/255. alpha:1.0];
+    
+    [UXView animateWithDuration:0.1 animations:^{
+        self.backgroundColor = [NSColor colorWithWhite:240/255. alpha:1.0];
+    }];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UXView animateWithDuration:0.1 animations:^{
+            self.backgroundColor = [NSColor whiteColor];
+        }];
+    });
 }
 
 - (void)mouseUp:(NSEvent *)theEvent

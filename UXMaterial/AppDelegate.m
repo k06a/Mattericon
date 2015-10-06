@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 @k06a. All rights reserved.
 //
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import "AppDelegate.h"
 #import "ABMainViewController.h"
 
@@ -20,6 +22,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [Fabric with:@[[Crashlytics class]]];
+
     self.rootViewController = [[UXNavigationController alloc] initWithRootViewController:[ABMainViewController new]];
     self.windowController = [[UXWindowController alloc] initWithRootViewController:self.rootViewController];
     

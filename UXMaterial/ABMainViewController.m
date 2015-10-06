@@ -380,6 +380,7 @@
         make.paragraphStyle(paragraphStyle);
     }];
     cell.textLabel.attributedText = astr;
+    [cell setNeedsDisplay];
     
     return cell;
 }

@@ -27,7 +27,7 @@
         
         [self addSubview:_titleLabel];
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self).with.insets(NSEdgeInsetsMake(0, 10, 0, 0));
+            make.edges.equalTo(self).with.insets(NSEdgeInsetsMake(0, 6, 0, 0));
         }];
     }
     return _titleLabel;
@@ -41,8 +41,8 @@
         
         [self addSubview:_separatorView];
         [_separatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leading.equalTo(@10);
-            make.trailing.equalTo(@(-10));
+            make.leading.equalTo(@6);
+            make.trailing.equalTo(@(-6));
             make.bottom.equalTo(@0);
             make.height.equalTo(@1);
         }];
