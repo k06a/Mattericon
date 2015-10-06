@@ -3,7 +3,7 @@
 //  UXMaterial
 //
 //  Created by Антон Буков on 05.10.15.
-//  Copyright © 2015 justmaku. All rights reserved.
+//  Copyright © 2015 @k06a. All rights reserved.
 //
 
 #import "NSFont+FromData.h"
@@ -14,12 +14,13 @@
 {
     CGDataProviderRef fontDataProvider = CGDataProviderCreateWithCFData((CFDataRef)data);
     CGFontRef newFont = CGFontCreateWithDataProvider(fontDataProvider);
-    NSString *newFontName = (__bridge NSString *)CGFontCopyPostScriptName(newFont);
+    CFStringRef newFontNameRef = CGFontCopyPostScriptName(newFont);
     CGDataProviderRelease(fontDataProvider);
     CFErrorRef error;
     CTFontManagerRegisterGraphicsFont(newFont, &error);
-    NSFont *font = [NSFont fontWithName:newFontName size:size];
+    NSFont *font = [NSFont fontWithName:(__bridge NSString *)newFontNameRef size:size];
     CGFontRelease(newFont);
+    CFRelease(newFontNameRef);
     return font;
 }
 

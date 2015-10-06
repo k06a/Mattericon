@@ -3,7 +3,7 @@
 //  UXMaterial
 //
 //  Created by Антон Буков on 05.10.15.
-//  Copyright © 2015 justmaku. All rights reserved.
+//  Copyright © 2015 @k06a. All rights reserved.
 //
 
 #import <AppKit/AppKit.h>
