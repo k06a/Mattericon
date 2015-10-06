@@ -1,8 +1,8 @@
 # Mattericon
-This app works supports only OS X 10.11.
+This app supports only OS X 10.11+ and works only with internet connection available.
 
 # @TODO:
-* Make button to reveal Google Material font in Finder
+* Add button to reveal Google Material Font in Finder
 * Automatically check for updates (https://github.com/sparkle-project/Sparkle/issues/648)
 
 # Authors
