@@ -305,13 +305,20 @@
     for (NSInteger section = collectionView.numberOfSections-1; section >= 0; section--)
     {
         UXCollectionViewLayoutAttributes *attrs = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
-        if (attrs.frame.origin.y <= collectionView.contentOffset.y)
+        CGFloat y = attrs.frame.origin.y - 36;
+        if (y <= collectionView.contentOffset.y)
         {
             self.floatingTabs.selectedIndex = section;
-            self.floatingTabs.progress = (collectionView.contentOffset.y - attrs.frame.origin.y + 38)/(prevY - attrs.frame.origin.y);
+            if (y <= collectionView.contentOffset.y &&
+                collectionView.contentOffset.y <= y + 36)
+            {
+                self.floatingTabs.progress = 0;
+            } else {
+                self.floatingTabs.progress = (collectionView.contentOffset.y - 36 - y)/(prevY - y - 36);
+            }
             break;
         }
-        prevY = attrs.frame.origin.y;
+        prevY = y;
     }
 }
 
