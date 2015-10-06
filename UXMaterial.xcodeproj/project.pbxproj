@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2503CAF11BC2631C001B167B /* UXKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2503CAF01BC2631C001B167B /* UXKit.framework */; };
-		2503CAF21BC26886001B167B /* UXKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2503CAF01BC2631C001B167B /* UXKit.framework */; };
 		2503CAF31BC26886001B167B /* UXKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2503CAF01BC2631C001B167B /* UXKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2533A7B31BC1D2050068A927 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2533A7B21BC1D2050068A927 /* StickyHeaderFlowLayout.m */; };
 		2533A7BC1BC1D7410068A927 /* NSFont+FromData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2533A7BB1BC1D7410068A927 /* NSFont+FromData.m */; };
@@ -16,6 +14,7 @@
 		2533A7C31BC1DBE90068A927 /* IconTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2533A7C21BC1DBE90068A927 /* IconTitleCell.m */; };
 		2533A7C61BC1DC3F0068A927 /* TitleHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2533A7C51BC1DC3F0068A927 /* TitleHeader.m */; };
 		256ED3ED1BC309AF004A793B /* ABFloatingTabs.m in Sources */ = {isa = PBXBuildFile; fileRef = 256ED3EC1BC309AF004A793B /* ABFloatingTabs.m */; };
+		256ED3F01BC3C0DA004A793B /* UXKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2503CAF01BC2631C001B167B /* UXKit.framework */; };
 		2EA6BEF51A8445E300C4C122 /* ABMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6BEF31A8445E300C4C122 /* ABMainViewController.m */; };
 		2EF7B67C1A8442BB00011200 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EF7B67B1A8442BB00011200 /* AppDelegate.m */; };
 		2EF7B67E1A8442BB00011200 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EF7B67D1A8442BB00011200 /* main.m */; };
@@ -51,6 +50,7 @@
 		2533A7C51BC1DC3F0068A927 /* TitleHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleHeader.m; sourceTree = "<group>"; };
 		256ED3EB1BC309AF004A793B /* ABFloatingTabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABFloatingTabs.h; sourceTree = "<group>"; };
 		256ED3EC1BC309AF004A793B /* ABFloatingTabs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABFloatingTabs.m; sourceTree = "<group>"; };
+		256ED3EE1BC3C0CD004A793B /* Projects */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Projects; path = ..; sourceTree = "<group>"; };
 		2EA6BEF11A84454900C4C122 /* Sample-Shared.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sample-Shared.pch"; sourceTree = "<group>"; };
 		2EA6BEF21A8445E300C4C122 /* ABMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABMainViewController.h; sourceTree = "<group>"; };
 		2EA6BEF31A8445E300C4C122 /* ABMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABMainViewController.m; sourceTree = "<group>"; };
@@ -71,9 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				256ED3F01BC3C0DA004A793B /* UXKit.framework in Frameworks */,
 				D706C730CF8608585DFD3303 /* libPods-UXMaterial.a in Frameworks */,
-				2503CAF11BC2631C001B167B /* UXKit.framework in Frameworks */,
-				2503CAF21BC26886001B167B /* UXKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +144,7 @@
 		D30C72BAAF2FE5E2132AF81D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				256ED3EE1BC3C0CD004A793B /* Projects */,
 				2503CAF01BC2631C001B167B /* UXKit.framework */,
 				42A5FB1EEFC6EA8081CBB0A8 /* libPods-UXMaterial.a */,
 			);
