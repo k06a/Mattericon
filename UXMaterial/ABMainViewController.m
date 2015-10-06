@@ -271,9 +271,9 @@
     self.view.backgroundColor = [NSColor grayColor];
 }
 
-- (void)viewDidAppear:(BOOL)arg1
+- (void)viewDidLayoutSubviews
 {
-    [super viewDidAppear:arg1];
+    [super viewDidLayoutSubviews];
     
     // Move toolbar to bottom
     for (NSLayoutConstraint *con in self.navigationController.toolbar.superview.constraints) {
@@ -284,6 +284,7 @@
             [self.navigationController.toolbar mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(self.navigationController.toolbar.superview.mas_bottom);
             }];
+            [self.view layoutIfNeeded];
             break;
         }
     }
@@ -342,7 +343,6 @@
     return 0.0;
 }
 
-
 - (void)collectionViewDidScroll:(UXCollectionView *)collectionView
 {
     if ([self.collectionView numberOfSections] == 0)
@@ -352,9 +352,13 @@
     CGFloat progress = [self progressForContentOffset:collectionView.contentOffset.y section:&section];
     
     CGFloat diff = collectionView.contentOffset.y + collectionView.frame.size.height - [self heightOfCollection];
+    NSInteger increment = 0;
     if (diff + 100 > 0)
     {
-        CGFloat maxProgress = [self progressForContentOffset:[self heightOfCollection] - collectionView.frame.size.height section:NULL];
+        NSInteger maxSection;
+        CGFloat maxProgress = [self progressForContentOffset:[self heightOfCollection] - collectionView.frame.size.height section:&maxSection];
+        increment = collectionView.numberOfSections - 2 - maxSection;
+        section += increment;
         progress += (1-maxProgress)*((diff + 100)/100);
     }
     

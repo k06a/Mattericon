@@ -22,6 +22,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSApplicationCrashOnExceptions":@YES}];
     [Fabric with:@[[Crashlytics class]]];
 
     self.rootViewController = [[UXNavigationController alloc] initWithRootViewController:[ABMainViewController new]];

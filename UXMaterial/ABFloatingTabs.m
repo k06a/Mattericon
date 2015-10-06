@@ -66,7 +66,7 @@
         prevLabel = label;
     }
     [prevLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.equalTo(@(-8));
+        make.trailing.lessThanOrEqualTo(@(-8));
     }];
 }
 
