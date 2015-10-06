@@ -71,14 +71,14 @@
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex
 {
-    NSLog(@"index = %@", @(selectedIndex));
+    //NSLog(@"index = %@", @(selectedIndex));
     _selectedIndex = selectedIndex;
     [self setNeedsLayout];
 }
 
 - (void)setProgress:(CGFloat)progress
 {
-    NSLog(@"progress = %@", @(progress));
+    //NSLog(@"progress = %@", @(progress));
     _progress = progress;
     [self setNeedsLayout];
 }

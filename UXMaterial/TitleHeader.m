@@ -52,6 +52,7 @@
 
 - (void)viewDidMoveToSuperview
 {
+    [super viewDidMoveToSuperview];
     //self.backgroundColor = [NSColor colorWithWhite:220/255. alpha:1.0];
     [self titleLabel];
     [self separatorView];

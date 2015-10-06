@@ -135,8 +135,8 @@
             });
         }
         
-        self.font = [NSFont fontWithData:fontData size:48];
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.font = [NSFont fontWithData:fontData size:48];
             [self.collectionView reloadData];
         });
     });
@@ -176,6 +176,12 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)navBarClicked:(UXClickEventTracker *)tracker
+{
+    if (!CGRectContainsPoint(self.searchField.bounds, [tracker locationInView:self.searchField]))
+        [self.collectionView setContentOffset:CGPointZero animated:YES];
+}
+
 #pragma mark - View
 
 - (void)viewDidLoad
@@ -185,7 +191,9 @@
     [self loadFont];
     [self loadItems];
     
+    // Nav Bar
     self.title = @"Material Icons";
+    [self.navigationController.navigationBar addEventTracker:[[UXClickEventTracker alloc] initWithTarget:self action:@selector(navBarClicked:)]];
     
     // Search Field
     self.searchField = [[NSSearchField alloc] init];
@@ -301,20 +309,21 @@
 
 - (void)collectionViewDidScroll:(UXCollectionView *)collectionView
 {
+    CGFloat headerHeight = ((UXCollectionViewFlowLayout *)collectionView.collectionViewLayout).headerReferenceSize.height;
     CGFloat prevY = collectionView.contentSize.height;
     for (NSInteger section = collectionView.numberOfSections-1; section >= 0; section--)
     {
         UXCollectionViewLayoutAttributes *attrs = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
-        CGFloat y = attrs.frame.origin.y - 36;
+        CGFloat y = attrs.frame.origin.y - headerHeight;
         if (y <= collectionView.contentOffset.y)
         {
             self.floatingTabs.selectedIndex = section;
             if (y <= collectionView.contentOffset.y &&
-                collectionView.contentOffset.y <= y + 36)
+                collectionView.contentOffset.y <= y + headerHeight)
             {
                 self.floatingTabs.progress = 0;
             } else {
-                self.floatingTabs.progress = (collectionView.contentOffset.y - 36 - y)/(prevY - y - 36);
+                self.floatingTabs.progress = (collectionView.contentOffset.y - headerHeight - y)/(prevY - y - headerHeight);
             }
             break;
         }

@@ -98,4 +98,12 @@
     [self dragFile:self.fileName fromRect:NSMakeRect(self.bounds.size.width/2, self.bounds.size.height/2, 0, 0) slideBack:YES event:theEvent];
 }
 
+- (void)viewDidMoveToSuperview
+{
+    [super viewDidMoveToSuperview];
+    
+    self.layer.rasterizationScale = [NSScreen mainScreen].scale;
+    self.layer.shouldRasterize = YES;
+}
+
 @end
