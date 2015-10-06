@@ -325,6 +325,8 @@
     CGFloat prevY = self.collectionView.contentSize.height;
     for (NSInteger section = self.collectionView.numberOfSections-1; section >= 0; section--)
     {
+        if (![self.collectionView numberOfItemsInSection:section])
+            continue;
         UXCollectionViewLayoutAttributes *attrs = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
         CGFloat y = attrs.frame.origin.y - headerHeight;
         if (y <= offsetY)
@@ -352,13 +354,11 @@
     CGFloat progress = [self progressForContentOffset:collectionView.contentOffset.y section:&section];
     
     CGFloat diff = collectionView.contentOffset.y + collectionView.frame.size.height - [self heightOfCollection];
-    NSInteger increment = 0;
     if (diff + 100 > 0)
     {
         NSInteger maxSection;
         CGFloat maxProgress = [self progressForContentOffset:[self heightOfCollection] - collectionView.frame.size.height section:&maxSection];
-        increment = collectionView.numberOfSections - 2 - maxSection;
-        section += increment;
+        section = collectionView.numberOfSections - 2;
         progress += (1-maxProgress)*((diff + 100)/100);
     }
     
