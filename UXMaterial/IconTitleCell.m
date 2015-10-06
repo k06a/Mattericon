@@ -88,7 +88,26 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     [self svg];
+    //self.backgroundColor = [NSColor colorWithWhite:240/255. alpha:1.0];
 }
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    //self.backgroundColor = [NSColor whiteColor];
+}
+
+/*
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
+{
+    if (context == NSDraggingContextOutsideApplication)
+        return NSDragOperationCopy;
+    return NSDragOperationNone;
+}
+
+- (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
+{
+    self.backgroundColor = [NSColor whiteColor];
+}*/
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
@@ -102,6 +121,8 @@
 {
     [super viewDidMoveToSuperview];
     
+    self.layer.cornerRadius = 5;
+    self.layer.masksToBounds = YES;
     self.layer.rasterizationScale = [NSScreen mainScreen].scale;
     self.layer.shouldRasterize = YES;
 }
