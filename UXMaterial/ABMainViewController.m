@@ -307,28 +307,59 @@
 
 #pragma mark - Collection View
 
-- (void)collectionViewDidScroll:(UXCollectionView *)collectionView
+- (CGFloat)heightOfCollection
 {
-    CGFloat headerHeight = ((UXCollectionViewFlowLayout *)collectionView.collectionViewLayout).headerReferenceSize.height;
-    CGFloat prevY = collectionView.contentSize.height;
-    for (NSInteger section = collectionView.numberOfSections-1; section >= 0; section--)
+    NSInteger section = self.collectionView.numberOfSections - 1;
+    NSInteger item = [self.collectionView numberOfItemsInSection:section] - 1;
+    if (section < 0 || item < 0)
+        return self.collectionView.bounds.size.height;
+
+    UXCollectionViewLayoutAttributes *attrs = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:section]];
+    return attrs.frame.origin.y + attrs.frame.size.height;
+}
+
+- (CGFloat)progressForContentOffset:(CGFloat)offsetY section:(NSInteger *)sectionOutput
+{
+    CGFloat headerHeight = ((UXCollectionViewFlowLayout *)self.collectionView.collectionViewLayout).headerReferenceSize.height;
+    CGFloat prevY = self.collectionView.contentSize.height;
+    for (NSInteger section = self.collectionView.numberOfSections-1; section >= 0; section--)
     {
-        UXCollectionViewLayoutAttributes *attrs = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
+        UXCollectionViewLayoutAttributes *attrs = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
         CGFloat y = attrs.frame.origin.y - headerHeight;
-        if (y <= collectionView.contentOffset.y)
+        if (y <= offsetY)
         {
-            self.floatingTabs.selectedIndex = section;
-            if (y <= collectionView.contentOffset.y &&
-                collectionView.contentOffset.y <= y + headerHeight)
-            {
-                self.floatingTabs.progress = 0;
-            } else {
-                self.floatingTabs.progress = (collectionView.contentOffset.y - headerHeight - y)/(prevY - y - headerHeight);
-            }
-            break;
+            if (sectionOutput)
+                *sectionOutput = section;
+            if (y <= offsetY && offsetY <= y + headerHeight)
+                return 0.0;
+            return (offsetY - headerHeight - y)/(prevY - y - headerHeight);
         }
         prevY = y;
     }
+    
+    if (sectionOutput)
+        *sectionOutput = 0;
+    return 0.0;
+}
+
+
+- (void)collectionViewDidScroll:(UXCollectionView *)collectionView
+{
+    if ([self.collectionView numberOfSections] == 0)
+        return;
+    
+    NSInteger section;
+    CGFloat progress = [self progressForContentOffset:collectionView.contentOffset.y section:&section];
+    
+    CGFloat diff = collectionView.contentOffset.y + collectionView.frame.size.height - [self heightOfCollection];
+    if (diff + 100 > 0)
+    {
+        CGFloat maxProgress = [self progressForContentOffset:[self heightOfCollection] - collectionView.frame.size.height section:NULL];
+        progress += (1-maxProgress)*((diff + 100)/100);
+    }
+    
+    self.floatingTabs.selectedIndex = section;
+    self.floatingTabs.progress = MIN(1.0, progress);
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UXCollectionView *)collectionView

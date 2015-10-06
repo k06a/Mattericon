@@ -174,6 +174,7 @@
 				40B5CD6A1A850442000B4448 /* CopyFiles */,
 				2533A7BD1BC1D8AF0068A927 /* Run Script Build Number Increment */,
 				9FBD3841C9207C5433249500 /* Copy Pods Resources */,
+				25DA4AC01BC4328900F58796 /* Run Script install_name_tool */,
 				25DA4ABF1BC3E31200F58796 /* Run Script Fabric */,
 			);
 			buildRules = (
@@ -258,6 +259,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric-OSX/Fabric.framework/run\" 565096d2c42a6c48ffb548a8d9ad12d8ca6cbc0a 23275bfbb1ef4f0b4d1b82a30629a05733d600c2d43e38cb519be16d44d8accc";
+		};
+		25DA4AC01BC4328900F58796 /* Run Script install_name_tool */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script install_name_tool";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "install_name_tool -change /System/Library/PrivateFrameworks/PhotoLibraryPrivate.framework/Versions/A/Frameworks/UXKit.framework/Versions/A/UXKit @executable_path/../Frameworks/UXKit.framework/UXKit $TARGET_BUILD_DIR/$EXECUTABLE_PATH";
 		};
 		3A423CD485496D8BD1FA2991 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
