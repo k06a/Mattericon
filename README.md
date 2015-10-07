@@ -1,5 +1,5 @@
 # Mattericon
-Just drag-n-drop icons directly to Sketch/Finder. This app supports only OS X 10.11+ and works only with internet connection available.
+Mattericon let you browse awesome Google Material Icons and drag-n-drop one directly to Sketch in SVG format. This is first opensource app based on new `UXKit.framework`. Supports only OS X 10.11+ and works only when internet connection available.
 
 Download latest: https://github.com/k06a/Mattericon/releases
 
