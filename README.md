@@ -1,22 +1,22 @@
 # Mattericon
-Mattericon let you browse awesome Google Material Icons and drag-n-drop one directly to Sketch in SVG format. This is first opensource app based on new `UXKit.framework`. Supports only OS X 10.11+ and works only when internet connection available.
-
+Mattericon lets you browse the awesome Google Material Icons and drag-n-drop them directly to the Sketch in the SVG format. This is the first opensource application based on the new `UXKit.framework`. Supports only OS X 10.11+ and works only when the Internet connection is available.
+ 
 Download latest: https://github.com/k06a/Mattericon/releases
 
 <img src="https://raw.githubusercontent.com/k06a/Mattericon/master/screenshot-1.png" width="40%">
 <img src="https://raw.githubusercontent.com/k06a/Mattericon/master/screenshot-2.png" width="40%">
 
 # Features
-* All icons with categories from https://www.google.com/design/icons/
-* Select color(b/w), format(svn/png) and size(18/24/36/48)
-* Live search for icon name
-* Drag-n-Drop icons out of app
+* All icons grouped by categories from https://www.google.com/design/icons/
+* Color selection(b/w), formatting(svn/png) and sizing(18/24/36/48)
+* Live search by icon names
+* Drag-n-Drop icons out of the app
 
 # TODO
-* Add button to reveal Google Material Font in Finder
+* Add a button to reveal Google Material Font in Finder
 * Automatically check for updates (https://github.com/sparkle-project/Sparkle/issues/648)
-* Resign application and inner framework with developer profile
+* Re-sign application and inner framework with developer profile
 
 # Authors
-Grishin Ilja ([@grishinilja](https://twitter.com/grishinilja)) – author of design and original idea, zero patient of Mattericon.<br>
-[Anton Bukov](https://gtihub.com/k06a) ([@k06a](https://twitter.com/k06a)) – developer of UXKit-based OS X version of Mattericon.
+Grishin Ilja ([@grishinilja](https://twitter.com/grishinilja)) – author of the design and the original idea, patient zero of Mattericon.<br>
+[Anton Bukov](https://gtihub.com/k06a) ([@k06a](https://twitter.com/k06a)) – developer of UXKit-based Mattericon version.
