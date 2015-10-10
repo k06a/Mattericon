@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UXCollectionView *collectionView;
 @property (nonatomic, strong) ABFloatingTabs *floatingTabs;
 
+@property (nonatomic, strong) NSData *fontData;
 @property (nonatomic, strong) NSFont *font;
 
 @property (nonatomic, strong) NSArray<NSDictionary*> *groups;
@@ -128,7 +129,7 @@
         NSInteger begin = [css rangeOfString:@"url("].location + 4;
         NSInteger end =  [css rangeOfString:@")" options:0 range:NSMakeRange(begin, css.length-begin)].location;
         NSString *fontPath = [css substringWithRange:NSMakeRange(begin, end - begin)];
-        NSData *fontData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fontPath] options:0 error:&error];
+        self.fontData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fontPath] options:0 error:&error];
         if (error) {
             return dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSAlert alertWithError:error] runModal];
@@ -136,7 +137,7 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.font = [NSFont fontWithData:fontData size:48];
+            self.font = [NSFont fontWithData:self.fontData size:48];
             [self.collectionView reloadData];
         });
     });
@@ -182,6 +183,18 @@
         [self.collectionView setContentOffset:CGPointZero animated:YES];
 }
 
+- (void)getFontTapped:(id)sender
+{
+    NSString *str;
+    for (NSInteger i = 0; i < 100; i++) {
+        str = [[NSString stringWithFormat:@"~/Downloads/MaterialFont%@.ttf", i ? [NSString stringWithFormat:@"-%@",@(i+1)] : @""] stringByExpandingTildeInPath];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:str])
+            break;
+    }
+    [self.fontData writeToFile:str atomically:YES];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:str]];
+}
+
 #pragma mark - View
 
 - (void)viewDidLoad
@@ -202,6 +215,8 @@
         make.width.equalTo(@150);
     }];
     UXBarButtonItem *searchItem = [[UXBarButtonItem alloc] initWithCustomView:self.searchField];
+    searchItem.keyEquivalent = @"f";
+    searchItem.keyEquivalentModifierMask = NSCommandKeyMask;
     self.navigationItem.rightBarButtonItems = @[searchItem];
     
     // Toolbar
@@ -236,8 +251,8 @@
         return self.sizeButton;
     }()];
     UXBarButtonItem *flexibleSpace = [[UXBarButtonItem alloc] initWithBarButtonSystemItem:13 target:nil action:nil];
-    //UXBarButtonItem *toolbarButton = [[UXBarButtonItem alloc] initWithTitle:@"Test there!" style:1 target:self action:nil];
-    [self setToolbarItems:@[colorButtonItem, formatButtonItem, sizeButtonItem, flexibleSpace]];
+    UXBarButtonItem *fontButton = [[UXBarButtonItem alloc] initWithTitle:@"Get Material Font" style:1 target:self action:@selector(getFontTapped:)];
+    [self setToolbarItems:@[colorButtonItem, formatButtonItem, sizeButtonItem, flexibleSpace, fontButton]];
     self.navigationController.toolbarHidden = NO;
     
     // Collection View
@@ -269,6 +284,18 @@
     }];
     
     self.view.backgroundColor = [NSColor grayColor];
+}
+
+- (void)viewWillAppear
+{
+    [super viewWillAppear];
+    
+    // Center of screen
+    NSRect frame = self.view.window.frame;
+    frame.size = NSMakeSize(800, 600);
+    frame.origin.x = (self.view.window.screen.frame.size.width - frame.size.width)/2;
+    frame.origin.y = (self.view.window.screen.frame.size.height - frame.size.height)/2;
+    [self.view.window setFrame:frame display:YES];
 }
 
 - (void)viewDidLayoutSubviews
