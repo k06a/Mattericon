@@ -13,6 +13,7 @@
 
 @interface AppDelegate ()
 
+@property (strong, nonatomic) ABMainViewController *mainController;
 @property (strong, nonatomic) UXNavigationController *rootViewController;
 @property (strong, nonatomic) UXWindowController *windowController;
 
@@ -20,12 +21,23 @@
 
 @implementation AppDelegate
 
+- (IBAction)search:(id)sender
+{
+    [self.mainController search:sender];
+}
+
+- (IBAction)getFont:(id)sender
+{
+    [self.mainController getFont:sender];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSApplicationCrashOnExceptions":@YES}];
     [Fabric with:@[[Crashlytics class]]];
 
-    self.rootViewController = [[UXNavigationController alloc] initWithRootViewController:[ABMainViewController new]];
+    self.mainController = [[ABMainViewController alloc] init];
+    self.rootViewController = [[UXNavigationController alloc] initWithRootViewController:self.mainController];
     self.windowController = [[UXWindowController alloc] initWithRootViewController:self.rootViewController];
     
     [self.windowController.window setContentSize:NSMakeSize(505, 700)];

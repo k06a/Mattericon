@@ -177,6 +177,7 @@
 				25DA4AC01BC4328900F58796 /* Run Script install_name_tool */,
 				2502DAED1BC45C6C00C1DA62 /* Run Script Sign Frameworks */,
 				25DA4ABF1BC3E31200F58796 /* Run Script Fabric */,
+				07CF28CBA30EF434277F4E97 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,6 +202,9 @@
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = U9FF7SJK5F;
 						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
 							com.apple.iCloud = {
 								enabled = 0;
 							};
@@ -239,6 +243,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		07CF28CBA30EF434277F4E97 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UXMaterial/Pods-UXMaterial-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2502DAED1BC45C6C00C1DA62 /* Run Script Sign Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -441,7 +460,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = UXMaterial/Mattericon.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -463,8 +482,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = UXMaterial/Mattericon.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

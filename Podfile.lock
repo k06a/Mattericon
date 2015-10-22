@@ -6,7 +6,6 @@ PODS:
   - Fabric-OSX/Base (1.5.5)
   - JRSwizzle (1.0)
   - Masonry (0.6.3)
-  - Sparkle (1.11.0)
 
 DEPENDENCIES:
   - BOString
@@ -14,7 +13,6 @@ DEPENDENCIES:
   - Fabric-OSX
   - JRSwizzle
   - Masonry
-  - Sparkle
 
 SPEC CHECKSUMS:
   BOString: c896f83b514996bbe874c0a3afd61f4c6764e0ed
@@ -22,6 +20,5 @@ SPEC CHECKSUMS:
   Fabric-OSX: 4e9c65e093eaaa536c89e801ce20065c14d65f1b
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
-  Sparkle: cf10103ef35fd89caa35373bfd772c5d6f9c7d73
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

@@ -11,7 +11,7 @@
 
 @interface ABFloatingTabs ()
 
-@property (nonatomic, strong) UXImageView *backImageView;
+@property (nonatomic, strong) UXView *backImageView;
 
 @end
 
@@ -23,10 +23,10 @@
     [self.delegate clickedTabAtIndex:index];
 }
 
-- (UXImageView *)backImageView
+- (UXView *)backImageView
 {
     if (_backImageView == nil) {
-        _backImageView = [[UXImageView alloc] init];
+        _backImageView = [[UXView alloc] init];
         _backImageView.backgroundColor = [[NSColor blackColor] colorWithAlphaComponent:0.1];
         _backImageView.layer.cornerRadius = 8;
         _backImageView.layer.masksToBounds = YES;

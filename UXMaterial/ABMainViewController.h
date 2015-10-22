@@ -10,4 +10,7 @@
 
 @interface ABMainViewController : UXViewController
 
+- (void)search:(id)sender;
+- (void)getFont:(id)sender;
+
 @end

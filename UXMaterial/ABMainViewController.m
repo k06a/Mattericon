@@ -192,7 +192,19 @@
             break;
     }
     [self.fontData writeToFile:str atomically:YES];
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL fileURLWithPath:str]];
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[NSURL fileURLWithPath:str]]];
+}
+
+#pragma mark - Actions
+
+- (void)search:(id)sender
+{
+    [[self.searchField window] makeFirstResponder:self.searchField];
+}
+
+- (void)getFont:(id)sender
+{
+    [self getFontTapped:sender];
 }
 
 #pragma mark - View
@@ -252,7 +264,7 @@
     }()];
     UXBarButtonItem *flexibleSpace = [[UXBarButtonItem alloc] initWithBarButtonSystemItem:13 target:nil action:nil];
     UXBarButtonItem *fontButton = [[UXBarButtonItem alloc] initWithTitle:@"Get Material Font" style:1 target:self action:@selector(getFontTapped:)];
-    [self setToolbarItems:@[colorButtonItem, formatButtonItem, sizeButtonItem, flexibleSpace, fontButton]];
+    self.toolbarItems = @[colorButtonItem, formatButtonItem, sizeButtonItem, flexibleSpace, fontButton];
     self.navigationController.toolbarHidden = NO;
     
     // Collection View
