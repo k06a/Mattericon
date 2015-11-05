@@ -123,6 +123,9 @@
         if (error) {
             return dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSAlert alertWithError:error] runModal];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self loadFont];
+                });
             });
         }
         
@@ -133,6 +136,9 @@
         if (error) {
             return dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSAlert alertWithError:error] runModal];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self loadFont];
+                });
             });
         }
         
@@ -147,12 +153,21 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://www.google.com/design/icons/data/grid.json"]];
+        if (data == nil) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self loadItems];
+            });
+            return;
+        }
         
         NSError *error;
         id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
         if (error) {
             return dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSAlert alertWithError:error] runModal];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self loadItems];
+                });
             });
         }
         
@@ -185,14 +200,15 @@
 
 - (void)getFontTapped:(id)sender
 {
-    NSString *str;
-    for (NSInteger i = 0; i < 100; i++) {
-        str = [[NSString stringWithFormat:@"~/Downloads/MaterialFont%@.ttf", i ? [NSString stringWithFormat:@"-%@",@(i+1)] : @""] stringByExpandingTildeInPath];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:str])
-            break;
-    }
-    [self.fontData writeToFile:str atomically:YES];
-    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[NSURL fileURLWithPath:str]]];
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    panel.title = @"Save Material Font";
+    panel.nameFieldStringValue = @"MaterialFont.ttf";
+    [panel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
+        if (result != NSModalResponseOK)
+            return;
+        [self.fontData writeToURL:panel.URL atomically:YES];
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[panel.URL]];
+    }];
 }
 
 #pragma mark - Actions
