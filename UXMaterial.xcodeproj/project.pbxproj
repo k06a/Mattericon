@@ -298,7 +298,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric-OSX/Fabric.framework/run\" 565096d2c42a6c48ffb548a8d9ad12d8ca6cbc0a 23275bfbb1ef4f0b4d1b82a30629a05733d600c2d43e38cb519be16d44d8accc";
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 565096d2c42a6c48ffb548a8d9ad12d8ca6cbc0a 23275bfbb1ef4f0b4d1b82a30629a05733d600c2d43e38cb519be16d44d8accc";
 		};
 		25DA4AC01BC4328900F58796 /* Run Script install_name_tool */ = {
 			isa = PBXShellScriptBuildPhase;

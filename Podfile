@@ -2,8 +2,8 @@ platform :osx, '10.11'
 
 target 'UXMaterial' do
 
-pod 'Fabric-OSX'
-pod 'Crashlytics-OSX'
+pod 'Fabric'
+pod 'Crashlytics'
 #pod 'Sparkle'
 
 pod 'JRSwizzle'

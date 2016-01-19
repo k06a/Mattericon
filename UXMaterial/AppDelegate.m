@@ -7,6 +7,7 @@
 //
 
 #import <Fabric/Fabric.h>
+#import <Crashlytics/Answers.h>
 #import <Crashlytics/Crashlytics.h>
 #import "AppDelegate.h"
 #import "ABMainViewController.h"
@@ -34,7 +35,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"NSApplicationCrashOnExceptions":@YES}];
-    [Fabric with:@[[Crashlytics class]]];
+    [Fabric with:@[[Crashlytics class], [Answers class]]];
 
     self.mainController = [[ABMainViewController alloc] init];
     self.rootViewController = [[UXNavigationController alloc] initWithRootViewController:self.mainController];

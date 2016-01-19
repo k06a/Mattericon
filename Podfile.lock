@@ -1,24 +1,23 @@
 PODS:
-  - BOString (0.0.9)
-  - Crashlytics-OSX (3.3.4)
-  - Fabric-OSX (1.5.5):
-    - Fabric-OSX/Base (= 1.5.5)
-  - Fabric-OSX/Base (1.5.5)
+  - BOString (0.10.0)
+  - Crashlytics (3.6.0):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.3)
   - JRSwizzle (1.0)
-  - Masonry (0.6.3)
+  - Masonry (0.6.4)
 
 DEPENDENCIES:
   - BOString
-  - Crashlytics-OSX
-  - Fabric-OSX
+  - Crashlytics
+  - Fabric
   - JRSwizzle
   - Masonry
 
 SPEC CHECKSUMS:
-  BOString: c896f83b514996bbe874c0a3afd61f4c6764e0ed
-  Crashlytics-OSX: bd34ff8cea31a8a707583f4de2f9aabdd98d4034
-  Fabric-OSX: 4e9c65e093eaaa536c89e801ce20065c14d65f1b
+  BOString: b4c4df4f8a7f046c42a51c32629772dc2701fc47
+  Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
+  Fabric: cbe0ca6c9531bba17910052f6f105fcbc5fa7f67
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
-  Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
 
 COCOAPODS: 0.39.0
