@@ -19,4 +19,4 @@ Download latest: https://github.com/k06a/Mattericon/releases
 
 # Authors
 Ilja Grishin ([@grishinilja](https://twitter.com/grishinilja)) – author of the design and the original idea, patient zero of Mattericon.<br>
-[Anton Bukov](https://gtihub.com/k06a) ([@k06a](https://twitter.com/k06a)) – developer of UXKit-based Mattericon version.
+[Anton Bukov](https://github.com/k06a) ([@k06a](https://twitter.com/k06a)) – developer of UXKit-based Mattericon version.
