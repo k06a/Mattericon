@@ -152,7 +152,7 @@
 - (void)loadItems
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://www.google.com/design/icons/data/grid.json"]];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://material.io/icons/data/grid.json"]];
         if (data == nil) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self loadItems];

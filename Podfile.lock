@@ -1,10 +1,10 @@
 PODS:
-  - BOString (0.10.0)
-  - Crashlytics (3.6.0):
+  - BOString (0.10.1)
+  - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.3)
+  - Fabric (1.6.11)
   - JRSwizzle (1.0)
-  - Masonry (0.6.4)
+  - Masonry (1.0.2)
 
 DEPENDENCIES:
   - BOString
@@ -14,10 +14,12 @@ DEPENDENCIES:
   - Masonry
 
 SPEC CHECKSUMS:
-  BOString: b4c4df4f8a7f046c42a51c32629772dc2701fc47
-  Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
-  Fabric: cbe0ca6c9531bba17910052f6f105fcbc5fa7f67
+  BOString: dd7bab05eac29080daecdf2d8fa7556fa24099b8
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
-  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 10f153a2df422d262251d85ffbd66488076cbfd7
+
+COCOAPODS: 1.1.1
